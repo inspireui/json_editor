@@ -13,15 +13,16 @@ void initialLogger({bool openDebug = true}) {
         ? kReleaseMode
             ? Level.error
             : Level.debug
-        : Level.nothing,
+        : Level.off,
     printer: PrettyPrinter(
-        stackTraceBeginIndex: 1,
-        methodCount: 2,
-        errorMethodCount: 8,
-        lineLength: 120,
-        colors: true,
-        printEmojis: true,
-        printTime: true),
+      stackTraceBeginIndex: 1,
+      methodCount: 2,
+      errorMethodCount: 8,
+      lineLength: 120,
+      colors: true,
+      printEmojis: true,
+      dateTimeFormat: DateTimeFormat.onlyTimeAndSinceStart,
+    ),
   );
 }
 
@@ -61,5 +62,9 @@ void error(
     tagStr += '(${object.runtimeType.toString()})';
   }
 
-  _logger?.e('$tagStr: ${message ?? ''}', err, trace);
+  _logger?.e(
+    '$tagStr: ${message ?? ''}',
+    error: err,
+    stackTrace: trace,
+  );
 }
